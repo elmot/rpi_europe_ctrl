@@ -12,11 +12,14 @@ project(rpi_europe_ctrl C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 set(PICO_BOARD pico)
+
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(rpi_europe_ctrl src/main.c)
+target_compile_options(rpi_europe_ctrl PRIVATE -g3 -O0)
+target_link_options(rpi_europe_ctrl PRIVATE -g3 -O0)
 
 #pico_set_program_name(rp2040-data-logger "rp2040-data-logger")
 #pico_set_program_version(rp2040-data-logger "0.1")

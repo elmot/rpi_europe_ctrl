@@ -79,7 +79,7 @@ int main() {
                     gpio_put(LED_MODE_2_GPIO, false);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 0);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1000);
                     break;
                 case 2:
                     gpio_put(LED_MODE_1_GPIO, true);
@@ -93,14 +93,14 @@ int main() {
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1500);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1700);
                     break;
                 case 4:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, true);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1700);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 2000);
                     break;
                 default:
                     gpio_put(LED_MODE_1_GPIO, false);

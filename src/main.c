@@ -1,6 +1,7 @@
-#include "pico/stdlib.h"
 #include "hardware/pwm.h"
+#include "hardware/clocks.h"
 #include "pindefs.h"
+#include "ppm.pio.h"
 
 static void setupBtn(uint pin) {
     gpio_init(pin);
@@ -13,6 +14,14 @@ static void setupLed(uint pin) {
     gpio_set_drive_strength(pin, GPIO_DRIVE_STRENGTH_4MA);
     gpio_set_dir(pin, GPIO_OUT);
 }
+
+uint slice_num;
+
+void output_mode_ch(uint value) {
+    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, value);
+    ppm_set_value(PPM_CH_NAV_MODE, value);
+}
+
 
 int main() {
     setupLed(LED_MODE_1_GPIO);
@@ -35,8 +44,8 @@ int main() {
     setupBtn(BTN_R_FINE_GPIO);
 
 
-    // Find out which PWM slice is connected to GPIO 0 (it's slice 0)
-    uint slice_num = pwm_gpio_to_slice_num(PWM_MODE_GPIO);
+    // Find out which PWM slice is connected to mode GPIO (it's slice 0)
+    slice_num = pwm_gpio_to_slice_num(PWM_MODE_GPIO);
 
     // Set PWM freq 100 Hz
     pwm_set_clkdiv(slice_num, 125);
@@ -47,6 +56,11 @@ int main() {
     uint mode = 0;
     uint steerPwm = 0;
     pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 0);
+
+    ppm_program_init(0, PPM_OUT_GPIO);
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
     while (1) {
         uint newMode = 0;
         if (gpio_get(BTN_MODE4_GPIO) == 0) {
@@ -64,46 +78,45 @@ int main() {
         }
         if (newMode != 0 && newMode != mode) {
             mode = newMode;
-            uint pwm = 0;
             switch (mode) {
                 case 1:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, false);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1300);
+                    output_mode_ch(1300);
                     break;
                 case 2:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1400);
+                    output_mode_ch(1400);
                     break;
                 case 3:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1550);
+                    output_mode_ch(1550);
                     break;
                 case 4:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, true);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1680);
+                    output_mode_ch(1680);
                     break;
                 default:
                     gpio_put(LED_MODE_1_GPIO, false);
                     gpio_put(LED_MODE_2_GPIO, false);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 0);
+                    output_mode_ch(0);
                     break;
             }
         }
-        uint newSteer = 0;
+        uint newSteer;
         if (gpio_get(BTN_L_GPIO) == 0) {
             newSteer = 1300;
         } else if (gpio_get(BTN_L_FINE_GPIO) == 0) {
@@ -118,7 +131,8 @@ int main() {
         if (newSteer != steerPwm) {
             steerPwm = newSteer;
             pwm_set_chan_level(slice_num, PWM_STEER_CHAN, steerPwm);
+            ppm_set_value(PPM_CH_STEER, steerPwm);
         }
     }
-
+#pragma clang diagnostic pop
 }

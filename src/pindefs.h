@@ -8,6 +8,10 @@
 #define PWM_MODE_GPIO   16
 #define PWM_STEER_GPIO  17
 
+#define PPM_OUT_GPIO     0
+#define PPM_CH_NAV_MODE  5
+#define PPM_CH_STEER     1
+
 #define BTN_MODE1_GPIO  10
 #define BTN_MODE2_GPIO  11
 #define BTN_MODE3_GPIO  12
@@ -25,4 +29,5 @@
 
 #define PWM_MODE_CHAN PWM_CHAN_A
 #define PWM_STEER_CHAN PWM_CHAN_B
+
 #endif //RPI_EUROPE_CTRL_PINDEFS_H

@@ -21,22 +21,21 @@ add_executable(rpi_europe_ctrl src/main.c)
 target_compile_options(rpi_europe_ctrl PRIVATE -g3 -O0)
 target_link_options(rpi_europe_ctrl PRIVATE -g3 -O0)
 
-#pico_set_program_name(rp2040-data-logger "rp2040-data-logger")
-#pico_set_program_version(rp2040-data-logger "0.1")
-#pico_generate_pio_header(rp2040-data-logger ${CMAKE_SOURCE_DIR}/src/ws2812.pio OUTPUT_DIR ${CMAKE_SOURCE_DIR}/src/generated)
+pico_set_program_name(rpi_europe_ctrl "rp2040-europe-autopilot-control")
+pico_set_program_version(rpi_europe_ctrl "0.2")
 
-# Add the standard library to the build
-target_link_libraries(rpi_europe_ctrl pico_stdlib hardware_pwm)
 
-# Add any user requested libraries
 target_link_libraries(rpi_europe_ctrl
+        pico_stdlib
+        hardware_pwm
         hardware_pio
         hardware_timer
         hardware_watchdog
         hardware_clocks
         )
 
+pico_generate_pio_header(rpi_europe_ctrl ${CMAKE_CURRENT_LIST_DIR}/src/ppm.pio)
+
 target_include_directories(rpi_europe_ctrl PRIVATE ${CMAKE_SOURCE_DIR}/src)
 #target_include_directories(rpi_europe_ctrl PRIVATE ${CMAKE_SOURCE_DIR}/generated)
 pico_add_extra_outputs(rpi_europe_ctrl)
-

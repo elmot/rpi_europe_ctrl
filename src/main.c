@@ -71,28 +71,28 @@ int main() {
                     gpio_put(LED_MODE_2_GPIO, false);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1000);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1300);
                     break;
                 case 2:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, false);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1300);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1400);
                     break;
                 case 3:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, false);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1700);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1550);
                     break;
                 case 4:
                     gpio_put(LED_MODE_1_GPIO, true);
                     gpio_put(LED_MODE_2_GPIO, true);
                     gpio_put(LED_MODE_3_GPIO, true);
                     gpio_put(LED_MODE_4_GPIO, true);
-                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 2000);
+                    pwm_set_chan_level(slice_num, PWM_MODE_CHAN, 1680);
                     break;
                 default:
                     gpio_put(LED_MODE_1_GPIO, false);
@@ -113,7 +113,7 @@ int main() {
         } else if (gpio_get(BTN_R_GPIO) == 0) {
             newSteer = 1700;
         } else {
-            newSteer = 1500;
+            newSteer = 1497;
         }
         if (newSteer != steerPwm) {
             steerPwm = newSteer;

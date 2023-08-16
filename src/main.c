@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-// Output PWM signals on pins 0 and 1
-
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 #include "pindefs.h"

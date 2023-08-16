@@ -1,3 +1,5 @@
+GP0 => PPM output
+
 GP16 => PWM2
 GP17 => PWM1
 

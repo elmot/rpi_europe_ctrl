@@ -9,8 +9,8 @@
 #define PWM_STEER_GPIO  17
 
 #define PPM_OUT_GPIO     0
-#define PPM_CH_NAV_MODE  5
-#define PPM_CH_STEER     1
+#define PPM_CH_NAV_MODE  8
+#define PPM_CH_STEER     4
 
 #define BTN_MODE1_GPIO  10
 #define BTN_MODE2_GPIO  11
